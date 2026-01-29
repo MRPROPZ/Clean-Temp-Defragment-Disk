@@ -1,5 +1,3 @@
----
-
 # Windows-Clean-Optimize
 
 Batch script สำหรับ Automate งาน Maintenance พื้นฐาน: ลบ Temp Files และ Optimize Drives (HDD/SSD) รองรับ Auto-Admin Elevation ในตัว
