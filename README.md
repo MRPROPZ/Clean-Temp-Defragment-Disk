@@ -21,11 +21,22 @@ Batch script สำหรับ Automate งาน Maintenance พื้นฐ�
 * `defrag /C /H /U /V`: รัน Optimization ทุกไดรฟ์ที่ตรวจพบแบบ Full Report
 
 ## How to Use
+พืมพ์คำสั่งต่อไปนี้ใน (CMD หรือ PowerShell):
 
-1. Clone หรือ Copy โค้ดในไฟล์ `.bat`
-2. Double-click รันไฟล์ได้ทันที
-3. กด **Yes** เมื่อหน้าต่าง UAC ปรากฏขึ้นเพื่ออนุญาตให้สิทธิ์ Admin
-4. รอจนขึ้นหน้าต่างสรุปผล (Verbose Report) แล้วกดคีย์ใดๆ เพื่อจบการทำงาน
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git](https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git)
+
+2. **Navigate to directory**
+    ```bash
+cd Windows-Clean-Optimize
+
+3. **Execute the script**
+    ```bash
+.\optimizer.bat
+    ```
+4. **Grant Permissions**
+    กด **Yes** เมื่อหน้าต่าง UAC ปรากฏขึ้นเพื่ออนุญาตให้สิทธิ์ Admin
 
 ## Flags Used
 
