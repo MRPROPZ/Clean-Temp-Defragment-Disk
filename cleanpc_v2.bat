@@ -27,10 +27,13 @@ echo.
 echo ---------------------------------------------------------
 echo 2. OPTIMIZING ALL DRIVES
 echo ---------------------------------------------------------
+
 echo This may take a while depending on your drive size...
 :: /C performs the operation on all volumes
 :: /H runs the operation at normal priority (faster)
 :: /U prints the progress on the screen
+:: /V display insight details before and after
+
 :: 2. Optimize all drives
 echo [*] Optimizing all drives (SSD Trim / HDD Defrag)...
 defrag /C /H /U /V
@@ -39,4 +42,5 @@ echo.
 echo ==========================================
 echo ALL TASKS COMPLETED SUCCESSFULLY
 echo ==========================================
+
 pause
