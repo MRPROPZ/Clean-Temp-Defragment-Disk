@@ -25,16 +25,19 @@ Batch script สำหรับ Automate งาน Maintenance พื้นฐ�
 
 1. **Clone the repository**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git](https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git)
+      git clone [https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git](https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git)
+   ```
 
 2. **Navigate to directory**
     ```bash
-cd Windows-Clean-Optimize
-
+      cd Windows-Clean-Optimize
+    ```
+    
 3. **Execute the script**
     ```bash
-.\optimizer.bat
+      .\optimizer.bat
     ```
+    
 4. **Grant Permissions**
     กด **Yes** เมื่อหน้าต่าง UAC ปรากฏขึ้นเพื่ออนุญาตให้สิทธิ์ Admin
 
