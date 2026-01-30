@@ -26,17 +26,17 @@ Batch script สำหรับตั้งค่าประสิทธิภ�
 
 1. **Clone the repository**
    ```bash
-      git clone [https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git](https://github.com/YOUR_USERNAME/Windows-Clean-Optimize.git)
+      git clone https://github.com/MRPROPZ/Clean-Temp-Defragment-Disk
    ```
 
 2. **Navigate to directory**
     ```bash
-      cd Windows-Clean-Optimize
+      cd Clean-Temp-Defragment-Disk
     ```
     
 3. **Execute the script**
     ```bash
-      .\optimizer.bat
+      .\cleanpc_v2.bat
     ```
     
 4. **Grant Permissions**
