@@ -13,7 +13,7 @@ echo ==========================================
 echo       WINDOWS SYSTEM OPTIMIZER MENU
 echo ==========================================
 echo  1) Adjust for Best Performance
-echo  2) Cleanup Temp Files ^& Optimize Disks (Original Code)
+echo  2) Cleanup Temp Files ^& Optimize Disks
 echo  3) Browser Cleanup (Chrome, Edge, Brave, Firefox)
 echo  4) Exit
 echo ==========================================
@@ -151,3 +151,4 @@ if "%target%"=="all" (
 echo [DONE] Browser cleanup finished.
 pause
 goto BROWSER_MENU
+
