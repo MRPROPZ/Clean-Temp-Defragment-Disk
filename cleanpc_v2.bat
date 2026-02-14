@@ -6,6 +6,7 @@ if %errorLevel% neq 0 (
     powershell -Command "Start-Process -FilePath '%0' -Verb RunAs"
     exit /b
 )
+color E
 
 :MENU
 cls
@@ -13,35 +14,72 @@ echo ==========================================
 echo       WINDOWS SYSTEM OPTIMIZER MENU
 echo ==========================================
 echo  1) Adjust for Best Performance
-echo  2) Cleanup Temp Files ^& Optimize Disks
+echo  2) Disk Cleanup ^& Cleanup Temp Files ^& Optimize Disks
 echo  3) Browser Cleanup (Chrome, Edge, Brave, Firefox)
 echo  4) Exit
 echo ==========================================
-set /p user_choice="Select an option (1-4): "
+choice /c 1234 /n /m "Select an option: "
 
-if "%user_choice%"=="1" goto PERFORMANCE
-if "%user_choice%"=="2" goto TEMP_OPTIMIZE
-if "%user_choice%"=="3" goto BROWSER_MENU
-if "%user_choice%"=="4" exit
+if errorlevel 4 goto EXIT
+if errorlevel 3 goto BROWSER_MENU
+if errorlevel 2 goto CLEAN_PC
+if errorlevel 1 goto PERFORMANCE
 goto MENU
 
 :PERFORMANCE
-echo.
+cls
 echo [*] Setting Performance Options to "Best Performance"...
-:: ปรับ Visual Effects เป็น Best Performance
+:: Adjust Visual Effects to Best Performance
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d 2 /f >nul 2>&1
-:: ปรับแต่ง Animation และจังหวะตอบสนอง
+:: Adjust Animation and responding
 reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d 9012028010000000 /f >nul 2>&1
 echo [DONE] Adjusted for Best Performance.
 pause
 goto MENU
 
-:TEMP_OPTIMIZE
+:CLEAN_PC
+cls
 echo ---------------------------------------------------------
-echo 1. CLEANING TEMPORARY FILES
+echo 1. DISK CLEANUP
 echo ---------------------------------------------------------
 
-:: 1. Clean Temp Files (Skips files in use)
+:: Remove Temp Files Windows
+echo remove temp on %TEMP% ...
+del /s /q "%TEMP%\*.*" >nul 2>&1
+rd /s /q "%TEMP%" >nul 2>&1
+md "%TEMP%" >nul 2>&1
+
+:: Remove Temp Files Windows (Must Run as Administrator)
+echo remove temp on C:\Windows\Temp ...
+del /s /q "C:\Windows\Temp\*.*" >nul 2>&1
+for /d %%p in ("C:\Windows\Temp\*.*") do rmdir "%%p" /s /q
+
+:: Delete Recycle Bin
+echo remove files in Recycle bin...
+rd /s /q C:\$Recycle.Bin
+
+:: Delete Windows Update Cache
+echo remove Windows Update cache...
+net stop wuauserv >nul 2>&1
+net stop bits >nul 2>&1
+del /s /q C:\Windows\SoftwareDistribution\Download\*.* >nul 2>&1
+net start wuauserv >nul 2>&1
+net start bits >nul 2>&1
+
+:: Use CleanMgr Automatic
+echo Using Disk Cleanup Tool...
+cleanmgr /sagerun:1
+
+echo ===============================================
+echo Diskcleanup Disk C: Successfully!
+echo ===============================================
+
+echo.
+echo ---------------------------------------------------------
+echo 2. CLEANING TEMPORARY FILES
+echo ---------------------------------------------------------
+
+:: Clean Temp Files (Skips files in use)
 echo [*] Cleaning temporary files...
 
 :: Deleting user temp files
@@ -55,7 +93,7 @@ echo [DONE] Temp cleanup finished.
 
 echo.
 echo ---------------------------------------------------------
-echo 2. OPTIMIZING ALL DRIVES
+echo 3. OPTIMIZING ALL DRIVES
 echo ---------------------------------------------------------
 
 echo This may take a while depending on your drive size...
@@ -64,7 +102,7 @@ echo This may take a while depending on your drive size...
 :: /U prints the progress on the screen
 :: /V display insight details before and after
 
-:: 2. Optimize all drives
+:: Optimize all drives
 echo [*] Optimizing all drives (SSD Trim / HDD Defrag)...
 defrag /C /H /U /V
 
@@ -87,19 +125,19 @@ echo  4) Mozilla Firefox
 echo  5) Clean ALL Browsers
 echo  6) Back to Main Menu
 echo ==========================================
-set /p br_choice="Select browser to clean (1-6): "
+choice /c 123456 /n /m "Select browser to clean (1-6): "
 
-if "%br_choice%"=="1" set "target=chrome" & goto CLEAN_BR
-if "%br_choice%"=="2" set "target=edge" & goto CLEAN_BR
-if "%br_choice%"=="3" set "target=brave" & goto CLEAN_BR
-if "%br_choice%"=="4" set "target=firefox" & goto CLEAN_BR
-if "%br_choice%"=="5" set "target=all" & goto CLEAN_BR
-if "%br_choice%"=="6" goto MENU
+if errorlevel 6 goto MENU
+if errorlevel 5 set "target=all" & goto CLEAN_BR
+if errorlevel 4 set "target=firefox" & goto CLEAN_BR
+if errorlevel 3 set "target=brave" & goto CLEAN_BR
+if errorlevel 2 set "target=edge" & goto CLEAN_BR
+if errorlevel 1 set "target=chrome" & goto CLEAN_BR
 goto BROWSER_MENU
 
 :CLEAN_BR
 echo.
-:: ปิดโปรเซส Browser
+:: Close Process Browser
 if "%target%"=="chrome" taskkill /F /IM chrome.exe /T >nul 2>&1
 if "%target%"=="edge" taskkill /F /IM msedge.exe /T >nul 2>&1
 if "%target%"=="brave" taskkill /F /IM brave.exe /T >nul 2>&1
@@ -111,7 +149,7 @@ if "%target%"=="all" (
     taskkill /F /IM firefox.exe /T >nul 2>&1
 )
 
-:: ขั้นตอนการลบ Cache และ History
+:: Process remove Cache & History
 if "%target%"=="chrome" (
     echo [*] Cleaning Google Chrome...
     del /q /s /f "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache\*.*" >nul 2>&1
